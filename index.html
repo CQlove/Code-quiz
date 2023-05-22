@@ -18,7 +18,9 @@
       <div id="start-screen" class="start">
         <h1>Coding Quiz Challenge</h1>
         <p>
-        <!-- start screen text -->
+          You have 75 seconds to finish 5 Javascript multiple-choice questions,
+          if you choose the wrong answer, you will get a penalty for 10 seconds, and
+          it will jump to the next one. Try to use less time to finish them.
         </p>
         <button id="start">Start Quiz</button>
       </div>
@@ -37,8 +39,14 @@
         </p>
       </div>
 
-      <div id="feedback" class="feedback hide"></div>
-    </div>
+      <div id="feedback" class="hide">
+        <h3>You got wrong one</h3>
+      </div>
+
+      <div id="feedback1" class="hide">
+        <h3>You got right one</h3>
+      </div>
+    </div>  
 
     <script src="./questions.js"></script>
     <script src="./logic.js"></script>

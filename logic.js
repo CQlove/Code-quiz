@@ -12,7 +12,7 @@ var submitBtn = document.getElementById('submit');
 var startBtn = document.getElementById('start');
 var initialsEl = document.getElementById('initials');
 var feedbackEl = document.getElementById('feedback');
-
+var feedbackEl1 = document.getElementById('feedback1');
 
 function startQuiz() {
   // hide start screen
@@ -30,7 +30,7 @@ function startQuiz() {
 
   getQuestion();
 }
-
+  
 function getQuestion() {
   // get current question object from array
   var currentQuestion = questions[currentQuestionIndex];
@@ -49,9 +49,7 @@ function getQuestion() {
     var choiceNode = document.createElement('button');
     choiceNode.setAttribute('class', 'choice');
     choiceNode.setAttribute('value', choice);
-
     choiceNode.textContent = i + 1 + '. ' + choice;
-
     // display on the page
     choicesEl.appendChild(choiceNode);
   }
@@ -59,41 +57,43 @@ function getQuestion() {
 
 function questionClick(event){
   var buttonEl = event.target;
-
+  console.log(event);
   // if the clicked element is not a choice button, do nothing.
   if (!buttonEl.matches('.choice')) {
     return;
   }
-
   // check if user guessed wrong
-  if (buttonEl.value !==questions[currentQuestionIndex].answer) {
-    
-
-
+  if (buttonEl.value !== questions[currentQuestionIndex].answer) {
     // penalize time
-    time -= 10;
-  
-   
-
+    time -= 10;     
     // display new time on page
-    timerEl.textContent = time
+    timerEl.textContent = time;
   }
   // flash right/wrong feedback on page for half a second
-  feedbackEl.setAttribute('class', 'feedback');
-  setTimeout(function () {
-    feedbackEl.setAttribute('class', 'feedback hide');
-  }, 500);
+  
+    if (buttonEl.value !== questions[currentQuestionIndex].answer) {
+      setTimeout(function () 
+      {feedbackEl.classList.toggle("hide");
+      console.log("wrong");},500)
+    } else {
+      setTimeout(function () 
+      {feedbackEl1.classList.toggle("hide");
+      console.log("right");},500)
+    }
+  
+  feedbackEl1.setAttribute('class', 'hide');
+  feedbackEl.setAttribute('class', 'hide');
 
   // move to next question
   currentQuestionIndex++;
 
   // check if we've run out of questions or if time ran out?
   if (time <= 0 || currentQuestionIndex === questions.length) {
-    //if it did ???
+    //goes into next function
     quizEnd();
   } else {
+    // call function again
     getQuestion();
-    // if it didnt??
   }
 }
 
@@ -115,7 +115,7 @@ function quizEnd() {
 function clockTick() {
   // update time
   // decrement the variable we are using to track time
-  timerEl.textContent = time--; // update out time
+  timerEl.textContent = time--; 
 
   // check if user ran out of time
   if (time <= 0) {
@@ -133,7 +133,7 @@ function saveHighscore() {
     // get saved scores from localstorage, or if not any, set to empty array
     
     var highscores =
-      JSON.parse(window.localStorage.getItem("highscores")) /* what would go inside the PARSE??*/ || [];
+      JSON.parse(window.localStorage.getItem("highscores")) || [];
 
     // format new score object for current user
     var newScore = {
